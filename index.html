@@ -69,7 +69,7 @@
         imageGallery:{
             //上传文件配置
             plupload:{ 
-                url: 'upload.php',
+                url: './php/upload.php',
                 multipart_params:{id:10},//用户id和帖子id 等额外参数
                 filters: {
                     max_imgfile_count: 3,
@@ -81,9 +81,9 @@
                 }
             },
             //相册类型的url
-            gallerytypeUrl:"./gallerytype.php",
+            gallerytypeUrl:"./php/gallerytype.php",
             //相册列表
-            getGalleryListUrl:"./lazyload.php"
+            getGalleryListUrl:"./php/lazyload.php"
         },
         imageSingle:{
             plupload:{ 

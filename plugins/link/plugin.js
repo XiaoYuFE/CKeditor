@@ -792,9 +792,8 @@
                     var onclickList = [
                             'window.open(this.href, \'', data.target.name || '', '\', \''
                         ],
-                        //'resizable', 'status', 'location', 'toolbar', 'menubar', 'fullscreen', 'scrollbars', 'dependent'
                         featureList = [
-                            'status', 'location', 'toolbar', 'menubar', 'fullscreen', 'scrollbars', 'dependent'
+                            'resizable', 'status', 'location', 'toolbar', 'menubar', 'fullscreen', 'scrollbars', 'dependent'
                         ],
                         featureLength = featureList.length,
                         addFeature = function(featureName) {
