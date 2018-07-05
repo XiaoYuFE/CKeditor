@@ -33,6 +33,12 @@
         }
     }
     .smiley-pic-list{
+        display:none;
+       
+        width:100%; 
+        &.active{
+            display:block;
+        }
     	&:after{
     		content:"";
 		    display:table;
@@ -52,6 +58,9 @@
     }
 
     .smiley-bd{
-    	padding:15px; 
+        overflow-y:auto; 
+        padding: 15px;
+        height:250px;
+    	
     }
 }

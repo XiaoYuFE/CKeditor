@@ -37,11 +37,11 @@
                             data: {},
                             success: function(data) {
                                 renderDialogHtml.call(editor, data);
-                                editor.smiley.layerIndex = layer.open({
+                                layer.open({
                                     type: 1,
                                     shade: false,
                                     title: false, //不显示标题
-                                    area: "420px",
+                                    area: "460px",
                                     content: editor.smiley.$dialog, //捕获的元素，注意：最好该指定的元素要存放在body最外层，否则可能被其它的相对元素所影响
                                     success: function(layero, index) {
 
@@ -57,7 +57,7 @@
                             type: 1,
                             shade: false,
                             title: false, //不显示标题
-                            area: "420px",
+                            area: "460px",
                             content: editor.smiley.$dialog, //捕获的元素，注意：最好该指定的元素要存放在body最外层，否则可能被其它的相对元素所影响
                             success: function(layero, index) {
 
@@ -84,7 +84,7 @@
                 bdStr += '<ul class="smiley-pic-list active">';
             } else {
                 hdStr += '<li><a href="#" data-type="' + data[i].type + '">' + data[i].title + '</a></li>';
-                bdStr += '<ul class="smiley-pic-list active">';
+                bdStr += '<ul class="smiley-pic-list">';
             }
             
             for (var j = 0; j < data[i].list.length; j++) {
@@ -96,15 +96,27 @@
         var str = '<div class="ckeditor-smiley-dialog" id="' + editor.smiley.dialogId + '">' +
             '<ul class="smiley-hd-list">' +
                 hdStr+
-                '<li class="move-seat"></li>' +
+                
             '</ul>' +
             '<div class="smiley-bd">' +
-                '<ul class="smiley-pic-list">' +
+               
                         bdStr+
-                '</ul>' +
+                
             '</div>' +
             '<div>';
         $(str).appendTo($("body"));
         editor.smiley.$dialog = $("#" + editor.smiley.dialogId);
+        var $li=editor.smiley.$dialog.find('.smiley-hd-list').children('li');
+        var $ul=editor.smiley.$dialog.find('.smiley-pic-list');   
+        $li.each(function(index, el) {
+            $(el).on("click",function(event){
+                event.preventDefault();
+                var $this=$(this);
+                $this.addClass("active").siblings().removeClass('active');
+                var index=$li.index(this);
+                $ul.removeClass('active').eq(index).addClass('active');
+                
+            })
+        });
     }
 })()
