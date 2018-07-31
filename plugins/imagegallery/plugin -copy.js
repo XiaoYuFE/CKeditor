@@ -4,15 +4,11 @@
 CKEDITOR.plugins.add('imagegallery', {
     icons: 'imagegallery',
 
-    beforeInit: function(editor) {
-        editor.editImg = {}; //编辑图片
-        editor.uploaderImg = {}; //上传图片
+    _editImgInit: function() {
+        var editor = this;
+        editor.editImg = {};
         editor.editImg.dialogId = editor.name + "-imgedit-dialog";
-        editor.uploaderImg.dialogId = editor.name + "-imgupload-dialog";
-
     },
-
-   
 
     _editImgRender: function() {
         var editor = this;
@@ -99,12 +95,15 @@ CKEDITOR.plugins.add('imagegallery', {
 
     },
 
-    
+    _uploadImgInit: function() {
+        var editor = this;
+        editor.uploaderImg = {};
+        editor.uploaderImg.dialogId = editor.name + "-imgupload-dialog";
+    },
+
     _uploadImgRender: function() {
         var editor = this;
-
-        var htmlStr='<div class="ckeditor-imgupload-dialog" id="' + editor.uploaderImg.dialogId + '"><ul class="imgupload-tab-hd"><li class="active"><a href="#' + editor.name + 'tabbd-localupload-container">本地上传</a></li><li><a href="#' + editor.name + 'tabbd-gallery-container">相册图片</a></li><li class="move-seat"></li></ul><div class="ckeditor-localupload-container active" id="' + editor.name + 'tabbd-localupload-container"><div class="ckeditor-uploadfile-container"><div class="ckeditor-uploadfile-hd"><div class="img-upload-info"><div class="info-txt"></div><div class="info-progress"><span class="txt"></span><span class="percentage"></span></div></div><a href="javascript:void(0);" class="img-upload-btn disabled">开始上传</a><div class="img-add-btn" id="img-add-btn-1">添加文件</div><a href="javascript:void(0);" class="img-pause-btn">暂停上传</a></div><div class="ckeditor-uploadfile-no">暂无文件，请添加图片并上传!</div><ul class="ckeditor-uploadfile-list"></ul><div class="ckeditor-uploadfile-ft"><label class="ft-save-checkbox"><input type="checkbox" name="" />保存到相册</label><select class="ft-gallery-sel" disabled><option value="1">默认相册</option><option value="2">相册01</option><option value="3">相册02</option></select><a href="#" class="ft-btn-insert disabled">插入</a><a href="#" class="ft-btn-cancel">关闭</a></div><div class="ckeditor-uploadfile-errortip"><i class="close"></i><div class="txt"></div></div></div></div><div class="ckeditor-gallery-container" id="' + editor.name + 'tabbd-gallery-container"><div class="ckeditor-gallery-nodata" style="display:none;">您的相册目前还没有照片,<a href="#">立马去上传</a></div><div class="ckeditor-gallery-hasdata" style="display:block;"><ul class="ckeditor-gallery-list"></ul><div class="ckeditor-gallery-ft"><select class="ft-galleryall-sel"><option value="1">默认相册</option><option value="2">相册01</option><option value="3">相册02</option></select><a href="#" class="ft-galleryall-insert">插入</a><a href="#" class="ft-galleryall-cancel">取消</a></div></div></div></div>';
-       
+        var htmlStr = '<div class="ckeditor-imgupload-dialog" id="' + editor.uploaderImg.dialogId + '"><ul class="imgupload-tab-hd"><li class="active"><a href="#' + editor.name + '-tabbd-localupload-container">本地上传</a></li><li><a href="#' + editor.name + '-tabbd-gallery-container">相册图片</a></li><li class="move-seat"></li></ul><div class="ckeditor-localupload-container active" id="' + editor.name + '-tabbd-localupload-container"><div class="ckeditor-uploadfile-container"><div class="ckeditor-uploadfile-hd"><div class="img-upload-allprogress"><span class="txt"></span><span class="percentage"></span></div><div class="img-upload-info"></div><a href="javascript:void(0);" class="img-upload-btn disabled">开始上传</a><div class="img-add-btn">添加文件</div><a href="javascript:void(0);" class="img-pause-btn">暂停上传</a></div><ul class="ckeditor-uploadfile-list"></ul><div class="ckeditor-uploadfile-ft"><label class="ft-save-checkbox"><input type="checkbox" name="saveingallery" />保存到相册</label><select class="ft-gallery-sel" disabled></select><a href="#" class="ft-btn-insert disabled">插入</a><a href="#" class="ft-btn-cancel">关闭</a></div><div class="ckeditor-uploadfile-errortip"><i class="close"></i><div class="txt"></div></div></div></div><div class="ckeditor-gallery-container" id="' + editor.name + '-tabbd-gallery-container"><div class="ckeditor-gallery-nodata" style="display:none;">您的相册目前还没有照片,<a href="#">立马去上传</a></div><div class="ckeditor-gallery-hasdata" style="display:block;"><ul class="ckeditor-gallery-list"></ul><div class="ckeditor-gallery-ft"><select class="ft-galleryall-sel"></select><a href="#" class="ft-galleryall-insert">插入</a><a href="#" class="ft-galleryall-cancel">取消</a></div></div></div></div>';
         $(htmlStr).appendTo($("body"));
         var $dialog = $("#" + editor.uploaderImg.dialogId);
         editor.uploaderImg.$dialog = $dialog;
@@ -134,8 +133,14 @@ CKEDITOR.plugins.add('imagegallery', {
             e.preventDefault();
             $(this).editorTab('show');
         });
+
+
+
+
+
+
+
     },
-    //上传图片
     _uploadImgUpHandler: function() {
         var editor = this;
         var $uploadBtn = editor.uploaderImg.$dialog.find(".img-upload-btn");
@@ -625,6 +630,7 @@ CKEDITOR.plugins.add('imagegallery', {
 
     init: function(editor) {
         var that = this;
+
         editor.ui.addButton('imagegallery', {
             // The text part of the button (if available) and the tooltip.
             label: '上传图片',
@@ -634,7 +640,8 @@ CKEDITOR.plugins.add('imagegallery', {
             toolbar: 'insert,2'
         });
 
-        
+        this._editImgInit.call(editor);
+        this._uploadImgInit.call(editor);
 
 
         
@@ -731,6 +738,9 @@ CKEDITOR.plugins.add('imagegallery', {
 
                         }
                     }
+
+
+
                 })
 
             }
